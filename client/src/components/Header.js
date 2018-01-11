@@ -14,7 +14,7 @@ class Header extends React.Component {
         return (
             <header>
                 <div id="title"><h3>Voting App</h3></div>
-                <div id="signIn">{this.props.signIn}</div>
+                <div id="signIn" onClick={this.props.onClick}>{this.props.signIn}</div>
             </header>
         );
     }

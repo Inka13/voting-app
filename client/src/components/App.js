@@ -30,10 +30,13 @@ class App extends Component {
 
     return body;
   };
+  handleSignInOut() {
+
+  }
   render() {
     return (
       <div className="app">
-                <Header signIn={this.state.signIn}/>
+                <Header signIn={this.state.signIn} onClick={this.handleSignInOut}/>
                 <Banner response={this.state.response} userName={this.state.userName}/>
                 <PollsList polls={this.state.polls}/>
         <p className="App-intro">
