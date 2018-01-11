@@ -1,0 +1,76 @@
+body {
+    
+    background: gold;
+}
+header {
+    position: relative;
+    width: 100%;
+    background: black;
+    color: gold;
+    height: 4rem;
+}
+h3 {
+    background: black;
+    text-align: center;
+    
+}
+#polls {
+    color: gold;
+    padding-top: 2rem;
+}
+#title {
+    float: left;
+    margin-left: 10px;
+}
+#signIn {
+    float: right;
+    margin: 18px;
+    padding: 3px;
+    border: 1px solid gold;
+}
+#banner {
+    width: 100%;
+    height: 15rem;
+    text-align: center;
+    background: blue;
+    color: black;
+}
+#welcome {
+    padding-top: 5rem;
+}
+#options {
+    width: 15rem;
+    margin: auto;
+    margin-top: 1.5rem;
+    display: flex;
+    color: black;
+}
+.userOpts {
+    background: gold;
+    width: 35%;
+    margin: auto;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 3px;
+}
+main {
+    width: 100%;
+    color: black;
+}
+ul {
+    font-size: 1.5rem;
+    list-style-type: none;
+    width: 40rem;
+    margin: auto;
+    padding-top: 3rem;
+}
+li {
+    
+    padding: 7px;
+    padding-bottom: 14px;
+    line-height: 2rem;
+}
+li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
