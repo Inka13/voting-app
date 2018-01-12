@@ -7,7 +7,7 @@ import './App.css';
 
 class App extends Component {
   state = {
-    response: 'Poller',
+    response: 'UglyPoller',
     signedIn: false,
     userName: '',
     polls: [],
@@ -24,7 +24,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
   callApiPolls = async () => {
-    const response = await fetch('/polls/all');
+    const response = await fetch('/polls');
     let body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
