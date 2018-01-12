@@ -11,6 +11,7 @@ class PollsList extends React.Component {
     componentDidMount(){
     }
     render() {
+            // need to put a loader here  <<<<<======
         return (
             <main>
                 <h3 id="polls">Polls List</h3>

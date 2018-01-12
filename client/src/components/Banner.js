@@ -10,14 +10,19 @@ class Banner extends React.Component {
     }
     componentDidMount(){
     }
+    
     render() {
+        let options;
+        if(this.props.userName) {
+        options =  <div id="options">
+                            <div className="userOpts">New Poll</div>
+                            <div className="userOpts">My Polls</div>
+                        </div>;
+        } else options = <div/>;
         return (
             <div id="banner">
-                <h1 id="welcome">{this.props.response} {this.props.userName}!</h1>
-                <div id="options">
-                    <div class="userOpts">New Pole</div>
-                    <div class="userOpts">My Poles</div>
-                </div>
+                <h1 id="welcome">{this.props.response}</h1>
+                {options}
             </div>
     
         );

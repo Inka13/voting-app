@@ -1,5 +1,4 @@
 body {
-    
     background: gold;
 }
 header {
@@ -37,6 +36,16 @@ h3 {
 }
 #welcome {
     padding-top: 5rem;
+}
+#signinform {
+    width: 15rem;
+    margin: auto;
+    padding-top: 1.5rem;
+    color: black;
+}
+input {
+    width: 100%;
+    margin-bottom: 15px;
 }
 #options {
     width: 15rem;
