@@ -1,19 +1,9 @@
 import React from 'react';
 
-class SignIn extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-        }
-    }
-    componentWillMount() {
-    }
-    componentDidMount(){
-
-    }
+class SigninForm extends React.Component {
+    
     render() {
         return (
-            <div id="banner">
                 <form id="signinform" >
                     E-mail:
                     <input onChange={this.props.handleEmail} type="email" name="email" placeholder="example@ex.com"/>
@@ -23,9 +13,7 @@ class SignIn extends React.Component {
                     <input onChange={this.props.handlePassword} type="password" name="password"/>
                     <input type="submit" value="Submit" onClick={this.props.handleSubmit}/>
                 </form>
-            </div>
-    
         );
     }
 }
-export default SignIn;
+export default SigninForm;

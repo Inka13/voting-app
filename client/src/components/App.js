@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Banner from './Banner';
-import SignIn from './SignIn';
+import UserForm from './UserForm';
 import PollsList from './PollsList';
 import './App.css';
 
@@ -13,7 +13,8 @@ class App extends Component {
     polls: [],
     form: false,
     email: '',
-    password: ''
+    password: '',
+    messages: []
   };
   componentWillMount() {
     this.callApiPolls()
@@ -31,7 +32,7 @@ class App extends Component {
   };
   handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch('/signin', {
+    const response = await fetch('/users', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -44,24 +45,48 @@ class App extends Component {
       })
     })
     let body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    this.setState({ 
-        response: body.response,
-        signedIn: body.signedIn,
-        userName: body.userName,
-        polls: body.polls,
-        form: body.signedIn ? false: true
-         });
+    if (response.status !== 200) {
+      this.setState({ 
+        messages: body.response,
+      });
+    } else {
+        this.setState({ 
+            response: body.response,
+            userName: body.createdUser.name,
+            signedIn: true,
+            form: false
+        });
+      }
   }
-  handleSignInOut = () => {
+  handleSubmitLogin = async (event) => {
+    event.preventDefault();
+    const response = await fetch('/users/'+this.state.userName+'?password='+this.state.password);
+    let body = await response.json();
+    if (response.status !== 200) {
+      this.setState({ 
+        messages: body.response,
+      });
+    } else {
+        this.setState({ 
+            response: body.response,
+            userName: body.user.name,
+            signedIn: true,
+            form: false
+        });
+      }
+  }
+  handleSignin = () => {
     if(this.state.signedIn) { 
       this.setState({ signedIn: false,
                       response: 'Poller',
                       userName: '' });
     }
     else {
-      this.setState({ form: true});
+      this.setState({ form: 'signin'});
     }
+  } 
+  handleLogin = () => {
+    if(!this.state.signedIn) this.setState({ form: 'login'});
   } 
   handleEmail = (e) => {this.setState({email: e.target.value})}
   handleUserName = (e) => {this.setState({userName: e.target.value})}
@@ -70,8 +95,10 @@ class App extends Component {
     if(!this.state.form) {
     return (
       <div className="app">
-                <Header signIn={this.state.signedIn ? 'Sign Out':'Sign In'}
-                        onClick={this.handleSignInOut}/>
+                <Header login={this.state.signedIn ?  this.state.userName : 'Log in'}
+                        signin={this.state.signedIn ? 'Log Out':'Sign In'}
+                        handleLogin={this.handleLogin}
+                        handleSignin={this.handleSignin}/>
                 <Banner response={this.state.response}
                         userName={this.state.userName}/>
                 <PollsList polls={this.state.polls}/>
@@ -81,9 +108,14 @@ class App extends Component {
     } else {
       return (
         <div className="app">
-                <Header signIn={this.state.signedIn ? 'Sign Out':'Sign In'}
-                        onClick={this.handleSignInOut}/>
-                <SignIn handleSubmit={this.handleSubmit} 
+                <Header login={this.state.signedIn ?  this.state.userName : 'Log in'}
+                        signin={this.state.signedIn ? 'Log Out':'Sign In'}
+                        handleLogin={this.handleLogin}
+                        handleSignin={this.handleSignin}/>
+                <UserForm action={this.state.form}
+                        messages={this.state.messages}
+                        handleSubmit={this.handleSubmit} 
+                        handleLogin={this.handleSubmitLogin} 
                         handleEmail={this.handleEmail}
                         handleUserName={this.handleUserName}
                         handlePassword={this.handlePassword}/>
