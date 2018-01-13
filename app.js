@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const pollRoutes = require('./routes/poll');
 const userRoutes = require('./routes/user');
-const signInRoute = require('./routes/signin');
+
 
 mongoose.connect(process.env.MONGOLAB_URI,
 	{
@@ -20,8 +20,6 @@ app.use(morgan('dev'));
 
 app.use('/polls', pollRoutes);
 app.use('/users', userRoutes);
-app.use('/signin', signInRoute);
-
 
 app.use((req, res, next) => {
 	const error = new Error('Not found');

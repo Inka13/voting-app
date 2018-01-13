@@ -17,14 +17,15 @@ class App extends Component {
     messages: []
   };
   componentWillMount() {
-    this.callApiPolls()
-      .then(res => this.setState({ 
+    this.getAllPolls()
+      .then(res => 
+        this.setState({ 
         response: res.response,
         polls: res.polls
-         }))
+    }))
       .catch(err => console.log(err));
   }
-  callApiPolls = async () => {
+  getAllPolls = async () => {
     const response = await fetch('/polls');
     let body = await response.json();
     if (response.status !== 200) throw Error(body.message);
@@ -88,6 +89,24 @@ class App extends Component {
   handleLogin = () => {
     if(!this.state.signedIn) this.setState({ form: 'login'});
   } 
+  handleNewPoll = () => {
+
+
+  }
+  handleMyPolls = async () => {
+    const response = await fetch('/polls/my/' + this.state.userName);
+    let body = await response.json();
+    if (response.status !== 200) {
+      this.setState({ 
+        messages: body.response,
+      });
+    } else {
+        this.setState({ 
+            response: body.response,
+            polls: body.polls
+        });
+      }
+  }
   handleEmail = (e) => {this.setState({email: e.target.value})}
   handleUserName = (e) => {this.setState({userName: e.target.value})}
   handlePassword = (e) => {this.setState({password: e.target.value})}
@@ -100,7 +119,9 @@ class App extends Component {
                         handleLogin={this.handleLogin}
                         handleSignin={this.handleSignin}/>
                 <Banner response={this.state.response}
-                        userName={this.state.userName}/>
+                        userName={this.state.userName}
+                        handleNewPoll={this.handleNewPoll}
+                        handleMyPolls={this.handleMyPolls}/>
                 <PollsList polls={this.state.polls}/>
       </div>
 

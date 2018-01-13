@@ -15,8 +15,8 @@ class Banner extends React.Component {
         let options;
         if(this.props.userName) {
         options =  <div id="options">
-                            <div className="userOpts">New Poll</div>
-                            <div className="userOpts">My Polls</div>
+                            <div className="userOpts" onClick={this.props.handleNewPoll}>New Poll</div>
+                            <div className="userOpts" onClick={this.props.handleMyPolls}>My Polls</div>
                         </div>;
         } else options = <div/>;
         return (

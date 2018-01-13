@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
 	user.save().then(result => {
 		res.status(201).json({
 			createdUser: user,
-			response: 'Welcome ' + user.name
+			response: 'Pretty ' + user.name + ' on UglyPoller'
 		});
 	})
 	.catch(err => {
