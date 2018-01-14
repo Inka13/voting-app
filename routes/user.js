@@ -32,6 +32,13 @@ router.get('/:name*', (req, res, next) => {
 	const { name } = req.params;
 	const password = req.query.password;
 	const response = [];
+	!name && response.push("Name can't be blank");
+	!password && response.push("Password can't be blank");
+	if(response.length>0) {
+		res.status(400).json({
+			response
+		});
+	}
 	User.findOne({name, password}).exec()
 	.then(user => {
 		res.status(200).json({
@@ -41,15 +48,27 @@ router.get('/:name*', (req, res, next) => {
 	})
 	.catch(err => {
 		console.log(err);
-		!name && response.push("Name can't be blank");
-		!password && response.push("Password can't be blank");
-		if(response.length<1) response.push("Username and password dont match");
+		response.push("Username and password don't match");
 		res.status(400).json({
 			response
 		});
 	})
 	
 });
-
+router.get('/', (req, res, next) => {
+	User.find({}).exec()
+	.then(users => {
+		res.status(200).json({
+			users,
+		});			
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(400).json({
+			response: err
+		});
+	})
+	
+});
 
 module.exports = router;

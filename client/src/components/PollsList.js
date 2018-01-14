@@ -16,9 +16,10 @@ class PollsList extends React.Component {
             pollsList.push(<li key={i}><a href={poll.url}>{poll.question}</a></li>)
         })
             // need to put a loader here  <<<<<======
+            
         return (
             <main>
-                <h3 id="polls">Polls List</h3>
+                
                 <div>
                 <ul>
                     {pollsList}    

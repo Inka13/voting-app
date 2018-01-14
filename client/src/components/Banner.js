@@ -24,7 +24,6 @@ class Banner extends React.Component {
                 <h1 id="welcome">{this.props.response}</h1>
                 {options}
             </div>
-    
         );
     }
 }

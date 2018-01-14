@@ -1,53 +1,61 @@
 body {
-    background: gold;
+    background: white;
 }
 header {
-    position: relative;
     width: 100%;
-    background: black;
-    color: gold;
+    background: orange;
+    color: white;
     height: 4rem;
 }
 h3 {
-    background: black;
+    background: orange;
     text-align: center;
     
 }
 #polls {
-    color: gold;
+    color: white;
     padding-top: 2rem;
 }
 #title {
     float: left;
-    margin-left: 10px;
+    margin-right: 2rem;
+    width: 13rem;
+}
+.myoptions {
+    float: left;
+    margin: 18px;
+    padding: 3px;
 }
 #signin {
     float: right;
     margin: 18px;
     padding: 3px;
-    border: 1px solid gold;
+    border: 1px solid white;
 }
 #login {
     float: right;
     margin: 18px;
     padding: 3px;
-    border: 1px solid gold;
+    
 }
 #banner {
     width: 100%;
-    min-height: 15rem;
+    height: 20rem;
     text-align: center;
-    background: blue;
-    color: black;
+    background: #ffff30;
+    color: orange;
+    
 }
 #welcome {
     padding-top: 5rem;
 }
 #signinform {
-    width: 15rem;
-    margin: auto;
+    width: 20rem;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
     padding-top: 1.5rem;
-    color: black;
+    color: orange;
+    float: left;
 }
 input {
     width: 100%;
@@ -61,7 +69,7 @@ input {
     color: black;
 }
 .userOpts {
-    background: gold;
+    background: lightgreen;
     width: 35%;
     margin: auto;
     font-weight: bold;
@@ -70,14 +78,15 @@ input {
 }
 main {
     width: 100%;
-    color: black;
+    color: grey;
 }
 ul {
-    font-size: 1.5rem;
+   
     list-style-type: none;
-    width: 40rem;
-    margin: auto;
-    padding-top: 3rem;
+    width: 30rem;
+    float: left;
+    
+    padding-top: 1.3rem;
 }
 li {
     

@@ -10,6 +10,7 @@ class App extends Component {
     response: 'UglyPoller',
     signedIn: false,
     userName: '',
+    userId: '',
     polls: [],
     form: false,
     email: '',
@@ -54,6 +55,7 @@ class App extends Component {
         this.setState({ 
             response: body.response,
             userName: body.createdUser.name,
+            userId: body.createdUser._id,
             signedIn: true,
             form: false
         });
@@ -71,19 +73,36 @@ class App extends Component {
         this.setState({ 
             response: body.response,
             userName: body.user.name,
+            userId: body.user._id,
             signedIn: true,
             form: false
         });
       }
   }
+  handleHome = () => {
+    this.getAllPolls()
+      .then(res => 
+        this.setState({ 
+          form: false,
+          polls: res.polls
+      }))
+  }
   handleSignin = () => {
     if(this.state.signedIn) { 
-      this.setState({ signedIn: false,
-                      response: 'Poller',
-                      userName: '' });
+      this.getAllPolls()
+      .then(res => 
+        this.setState({ 
+          signedIn: false,
+          userName: '',
+          userId: '',
+          response: res.response,
+          polls: res.polls
+      }))
+      .catch(err => console.log(err));
     }
     else {
       this.setState({ form: 'signin'});
+
     }
   } 
   handleLogin = () => {
@@ -94,7 +113,7 @@ class App extends Component {
 
   }
   handleMyPolls = async () => {
-    const response = await fetch('/polls/my/' + this.state.userName);
+    const response = await fetch('/polls/my/' + this.state.userId);
     let body = await response.json();
     if (response.status !== 200) {
       this.setState({ 
@@ -112,16 +131,24 @@ class App extends Component {
   handlePassword = (e) => {this.setState({password: e.target.value})}
   render() {
     if(!this.state.form) {
+      let banner;
+      if(!this.state.signedIn) {
+        banner = <Banner response={this.state.response}
+                        userName={this.state.userName}
+
+                        handleNewPoll={this.handleNewPoll}
+                        handleMyPolls={this.handleMyPolls}/>;
+
+      } else banner = <span/>;
     return (
       <div className="app">
                 <Header login={this.state.signedIn ?  this.state.userName : 'Log in'}
-                        signin={this.state.signedIn ? 'Log Out':'Sign In'}
+                        signin={this.state.signedIn ? 'Sign Out':'Sign Up'}
                         handleLogin={this.handleLogin}
-                        handleSignin={this.handleSignin}/>
-                <Banner response={this.state.response}
-                        userName={this.state.userName}
-                        handleNewPoll={this.handleNewPoll}
-                        handleMyPolls={this.handleMyPolls}/>
+                        handleSignin={this.handleSignin}
+                        handleHome={this.handleHome}
+                        />
+                {banner}
                 <PollsList polls={this.state.polls}/>
       </div>
 
@@ -130,9 +157,10 @@ class App extends Component {
       return (
         <div className="app">
                 <Header login={this.state.signedIn ?  this.state.userName : 'Log in'}
-                        signin={this.state.signedIn ? 'Log Out':'Sign In'}
+                        signin={this.state.signedIn ? 'Log Out':'Sign Up'}
                         handleLogin={this.handleLogin}
-                        handleSignin={this.handleSignin}/>
+                        handleSignin={this.handleSignin}
+                        handleHome={this.handleHome}/>
                 <UserForm action={this.state.form}
                         messages={this.state.messages}
                         handleSubmit={this.handleSubmit} 

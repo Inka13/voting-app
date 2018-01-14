@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 class UserForm extends React.Component {
     
     render() {
-        let messageList = [];
+        const messageList = [];
         this.props.messages.forEach((message, i) => {
             messageList.push(<li key={i}>{message}</li>);
         });
