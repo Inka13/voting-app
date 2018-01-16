@@ -1,74 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const User = require('../models/user');
+const checkAuth = require('../middleware/check-auth');
 
-router.post('/', (req, res, next) => {
-	const user = new User({
-		_id: new mongoose.Types.ObjectId(),
-		name: req.body.name,
-		password: req.body.password,
-		email: req.body.email
-	});
-	user.save().then(result => {
-		res.status(201).json({
-			createdUser: user,
-			response: 'Pretty ' + user.name + ' on UglyPoller'
-		});
-	})
-	.catch(err => {
-		//console.log(err);
-		const response = [];
-		!req.body.email && response.push("Email can't be blank");
-		!req.body.name && response.push("Name can't be blank");
-		!req.body.password && response.push("Password can't be blank");
-		if(response.length<1) response.push("There is already a user with that username or email");
-		res.status(400).json({
-			response
-		});
-	});	
-});
-router.get('/:name*', (req, res, next) => {
-	const { name } = req.params;
-	const password = req.query.password;
-	const response = [];
-	!name && response.push("Name can't be blank");
-	!password && response.push("Password can't be blank");
-	if(response.length>0) {
-		res.status(400).json({
-			response
-		});
-	}
-	User.findOne({name, password}).exec()
-	.then(user => {
-		res.status(200).json({
-			user,
-			response: 'Welcome ' + user.name
-		});			
-	})
-	.catch(err => {
-		console.log(err);
-		response.push("Username and password don't match");
-		res.status(400).json({
-			response
-		});
-	})
-	
-});
-router.get('/', (req, res, next) => {
-	User.find({}).exec()
-	.then(users => {
-		res.status(200).json({
-			users,
-		});			
-	})
-	.catch(err => {
-		console.log(err);
-		res.status(400).json({
-			response: err
-		});
-	})
-	
-});
+const UserController = require('../controllers/user');
+
+router.post('/signup', UserController.signup);
+
+router.post('/login', UserController.login);
+
+router.delete('/:userId', checkAuth, UserController.deleteUser);
+
+router.get('/', UserController.getAllUsers);
 
 module.exports = router;
