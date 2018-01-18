@@ -72,6 +72,7 @@ exports.login = (req, res, next) => {
 						);
 						res.status(200).json({
 							response: 'Auth success',
+							user: users[0],
 							token
 						});	
 					} else {

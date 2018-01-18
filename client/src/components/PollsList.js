@@ -1,32 +1,41 @@
-import React from 'react';
-
-class PollsList extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-        }
-    }
-    componentWillMount() {
-    }
-    componentDidMount(){
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getOnePoll} from '../actions/index';
+import Poll from './Poll'
+class PollsList extends Component {
+    createList() {
+        const list = [];
+         this.props.polls.forEach((poll) => {
+              list.push(<li key={poll.id} onClick={ () => this.props.getOnePoll(poll)}><a href={poll.request.url}>{poll.question}</a></li>);
+        });
+        return list;
     }
     render() {
-        const pollsList = [];
-        this.props.polls.forEach((poll, i) => {
-            pollsList.push(<li key={i}><a href={poll.url}>{poll.question}</a></li>)
-        })
+        
             // need to put a loader here  <<<<<======
-            
+         if(this.props.polls){   
         return (
             <main>
-                
-                <div>
+                <Poll />
                 <ul>
-                    {pollsList}    
+                    {this.createList()}    
                 </ul>
-                </div>
             </main>
         );
+    } else {
+        return (<p>Nothing...</p>);
+    }
     }
 }
-export default PollsList;
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getOnePoll
+    }, dispatch);
+}
+function mapStateToProps(state) {
+    return {
+        polls: state.polls
+    };
+}
+export default connect(mapStateToProps, matchDispatchToProps)(PollsList);

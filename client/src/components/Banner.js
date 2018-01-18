@@ -1,30 +1,26 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
+import UserForm from './UserForm';
 class Banner extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-        }
-    }
-    componentWillMount() {
-    }
-    componentDidMount(){
-    }
     
     render() {
-        let options;
-        if(this.props.userName) {
-        options =  <div id="options">
-                            <div className="userOpts" onClick={this.props.handleNewPoll}>New Poll</div>
-                            <div className="userOpts" onClick={this.props.handleMyPolls}>My Polls</div>
-                        </div>;
-        } else options = <div/>;
+        if(this.props.form!=='') {
+            return (
+                <div id="banner">
+                <UserForm />
+                </div>);
+        } 
         return (
             <div id="banner">
-                <h1 id="welcome">{this.props.response}</h1>
-                {options}
+                <h1 id="welcome">Welcome</h1>
             </div>
         );
     }
 }
-export default Banner;
+
+function mapStateToProps(state) {
+    return {
+        form: state.form
+    };
+}
+export default connect(mapStateToProps)(Banner);

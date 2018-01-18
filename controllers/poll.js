@@ -8,6 +8,7 @@ exports.getMyPolls = (req, res, next) => {
 	.then(polls => {
 		polls.map(poll => {
 			return {
+				id: poll._id,
 				question: poll.question,
 				options: poll.options,
 				posted_by: poll.posted_by,
@@ -68,6 +69,7 @@ exports.getAllPolls = (req, res, next) => {
 			response: 'Fetched polls.',
 			polls : polls.map(poll => {
 				return {
+					id: poll._id,
 					question: poll.question,
 					options: poll.options,
 					posted_by: poll.posted_by,
@@ -166,7 +168,9 @@ exports.updatePoll = (req, res, next) => {
 
 exports.deletePoll = (req, res, next) => {
 	const id = req.body.pollId;
-	Poll.remove({_id: id}).exec()
+	const userId = req.body.userId;
+	
+	Poll.remove({$and : [ {_id: id}, {posted_by: userId} ]}).exec()
 	.then(result => {
 		res.status(200).json({
 			response: 'Poll deleted.'

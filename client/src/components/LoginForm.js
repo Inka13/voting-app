@@ -1,17 +1,32 @@
 import React from 'react';
-
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {submitLogin} from '../actions/index';
 class LoginForm extends React.Component {
-   
+   submit = (e) => {
+    e.preventDefault();
+    this.props.submitLogin(this.refs.name.value, this.refs.password.value);
+    }
     render() {
         return (
-                <form id="signinform" >
+                <form onSubmit={this.submit} id="signinform" >
                     Name:
-                    <input onChange={this.props.handleUserName} type="text" name="userName" />
+                    <input ref="name" type="text"/>
                     Password:
-                    <input onChange={this.props.handlePassword} type="password" name="password"/>
-                    <input type="submit" value="Submit" onClick={this.props.handleLogin}/>
+                    <input ref="password" type="password"/>
+                    <button type="submit">Submit</button>
                 </form>
         );
     }
 }
-export default LoginForm;
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        submitLogin,
+    }, dispatch);
+}
+function mapStateToProps(state) {
+    return {
+        messages: state.messages
+    };
+}
+export default connect(mapStateToProps, matchDispatchToProps)(LoginForm);

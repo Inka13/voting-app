@@ -4,7 +4,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const PollController = require('../controllers/poll');
 
-router.post('/my', checkAuth, PollController.getMyPolls);
+router.post('/my', PollController.getMyPolls);
 
 router.get('/:pollId', PollController.getOnePoll);
 
