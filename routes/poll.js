@@ -4,7 +4,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const PollController = require('../controllers/poll');
 
-router.post('/my', PollController.getMyPolls);
+router.get('/my/:userId', PollController.getMyPolls);
 
 router.get('/:pollId', PollController.getOnePoll);
 
@@ -12,7 +12,9 @@ router.get('/', PollController.getAllPolls);
 
 router.post('/', checkAuth, PollController.createNewPoll);
 
-router.patch('/:pollId', checkAuth, PollController.updatePoll);
+
+
+router.patch('/:pollId', PollController.updatePoll);
 
 router.delete('/', checkAuth, PollController.deletePoll);
 

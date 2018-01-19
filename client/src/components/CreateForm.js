@@ -1,8 +1,8 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {submitSignup, hideForm} from '../actions/index';
-class SigninForm extends React.Component {
+import {createNewPoll, hideForm} from '../actions/index';
+class CreateForm extends React.Component {
 
     submit = (e) => {
     e.preventDefault();
@@ -11,22 +11,23 @@ class SigninForm extends React.Component {
     
     render() {
         return (
-                <form id="signinform" onSubmit={this.submit}>
+                <form id="createform" onSubmit={this.submit}>
                     <div className="formtop">
-                        Sign Up
+                        Create New Poll
                         <span className="x" onClick={this.props.hideForm}>X</span>
                     </div>
                     <div className="form">
-                        <div className="inputopts">E-mail:</div>
-                        <input ref="email" type="email" required/>
+                        <div className="inputopts">Topic:</div>
+                        <input ref="text" type="text" required/>
+
                     </div>
                     <div className="form">
-                        <div className="inputopts">Name:</div>
-                        <input ref="name" type="text" required/>
+                        <div className="inputopts">1:</div>
+                        <input ref="Option1" type="text" required/>
                     </div>
                     <div className="form">
-                        <div className="inputopts">Password:</div>
-                        <input ref="password" type="password" required/>
+                        <div className="inputopts">2:</div>
+                        <input ref="option2" type="text" required/>
                     </div>
                     <div className="submit">
                         <button type="submit">Submit</button>
@@ -37,7 +38,7 @@ class SigninForm extends React.Component {
 }
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        submitSignup,
+        createNewPoll,
         hideForm
     }, dispatch);
 }
@@ -47,4 +48,4 @@ function mapStateToProps(state) {
         messages: state.messages
     };
 }
-export default connect(mapStateToProps, matchDispatchToProps)(SigninForm);
+export default connect(mapStateToProps, matchDispatchToProps)(CreateForm);

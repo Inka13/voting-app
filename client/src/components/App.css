@@ -1,44 +1,145 @@
+* {
+    box-sizing: border-box;
+}
 body {
-    background: white;
+    background: linear-gradient(to right, rgb(173, 237, 254) 30%, rgb(133, 197, 214) 70%);
+    font-family: 'Roboto Condensed', sans-serif;
 }
 header {
     width: 100%;
-    background: orange;
+    background: linear-gradient(to left, rgb(92, 126, 170) 30%, rgb(132, 166, 210) 70%);
     color: white;
-    height: 4rem;
+    height: 56px;
 }
-h3 {
-    background: orange;
+#active {
+    width: 90%;
+    background: white;
+    box-shadow: 3px 3px 20px;
+    margin: auto;
+    margin-top: 40px;
+    min-height: 400px;
+}
+#votelist {
+    float: left;
     text-align: center;
-    
+    width: 30%;
+    margin-left: 5%;
+    height: ;
 }
-#polls {
-    color: white;
-    padding-top: 2rem;
+.votingopts {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid rgb(112, 146, 190);
+    margin-bottom: 15px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+}
+#graph {
+    float: left;
+    width: 60%;
+    margin-top: 40px;
+    margin-left: 5%;
+    border: 1px solid black;
+}
+#clear {
+    clear: both;
 }
 #title {
     float: left;
-    margin-right: 2rem;
-    width: 13rem;
+    font-size: 30px;
+    text-align: center;
+    padding: 8px 20px 0 15px;
+
 }
 .myoptions {
     float: left;
-    margin: 18px;
-    padding: 3px;
+    padding: 18px;
+}
+.myoptions:hover {
+    color: rgb(181, 230, 29);
 }
 #signin {
     float: right;
-    margin: 18px;
-    padding: 3px;
+    margin: 11px;
+    padding: 7px;
     border: 1px solid white;
+}
+#signin:hover {
+    color: rgb(181, 230, 29);
 }
 #login {
     float: right;
-    margin: 18px;
-    padding: 3px;
-    
+    padding: 18px;
 }
+#login:hover {
+    color: rgb(181, 230, 29);
+}
+main {
+    width: 80%;
+    margin: auto;
+    color: rgb(50, 50, 50);
+}
+#search {
+    position: relative;
+    margin: auto;
+    margin-top: 5px;
+    border-bottom: 2px solid rgb(112, 146, 190);
+    height: 47px;
+}
+.searchopt {
+    color: rgb(112, 146, 190);
+    float: left;
+    padding: 13px 15px;
+}
+.searchopt:hover {
+    color: white;
+
+}
+.pollbox {
+    width: 20%;
+    margin-left: 4%;
+    margin-top: 40px;
+    height: 130px;
+    float: left;
+   
+    background: white;
+    overflow: hidden;
+    box-shadow: 5px 5px 10px;
+}
+.pollbox:hover {
+    box-shadow: none;
+    margin-top: 37px;
+}
+.titles {
+    text-align: center;
+    padding: 3px 8px;
+    height: 90px;
+    font-size: 1.1rem;
+    overflow: hidden;
+} 
+.pollbox-bottom {
+    background: linear-gradient(to left, rgb(151, 200, 0) 20%, rgb(181, 230, 29) 80%);
+    height: 40px;
+    width: 101%;
+    margin-left: -1px; 
+}
+.legend {
+    width: 50%;
+    font-size: 0.8rem;
+    padding: 3px 5px 0 10px;
+    float: left;
+    color: rgb(0, 64, 128);
+}
+.on {
+    width: 100%;
+} 
+
+.legend span {
+    font-weight: bold;
+}
+
 #banner {
+
     width: 100%;
     height: 20rem;
     text-align: center;
@@ -49,52 +150,73 @@ h3 {
 #welcome {
     padding-top: 5rem;
 }
-#signinform {
-    width: 20rem;
-    margin-top: 1.5rem;
-    margin-left: 1.5rem;
-    padding-top: 1.5rem;
-    color: orange;
-    float: left;
+#signinform, #loginform, #createform {
+    position: absolute;
+    background: white;
+    border: 1px solid rgb(112, 146, 190);
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 40px;
+    color: rgb(127, 127, 127);
+}
+#createform {
+    width: 50%;
+    margin-left: 25%;
+}
+.form {
+    width: 80%;
+    margin-left: 10%;
+}
+.formback {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 7;
+}
+.formtop {
+    margin-bottom: 40px;
+    background: rgb(181, 230, 29);
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+}
+.x {
+    float: right;
+}
+.inputopts {
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
 }
 input {
-    width: 100%;
-    margin-bottom: 15px;
+    width: 60%;
+    height: 30px;
+    font-size: 15px;
+    margin-bottom: 30px;
 }
-#options {
-    width: 15rem;
+#createform .inputopts {
+     width: 15%;
+}
+#createform input {
+     width: 70%;
+}
+button {
+    padding: 9px;
+    background: rgb(112, 146, 190);
+    font-size: 15px;
+    color: white;
+    border:1px solid rgb(153, 217, 234);
+    border-radius: 12px;
+    width: 70px;
+}
+.submit {
+    width: 70px;
     margin: auto;
-    margin-top: 1.5rem;
-    display: flex;
-    color: black;
-}
-.userOpts {
-    background: lightgreen;
-    width: 35%;
-    margin: auto;
-    font-weight: bold;
-    margin-top: 1rem;
-    padding: 3px;
-}
-main {
-    width: 100%;
-    color: grey;
-}
-ul {
-   
-    list-style-type: none;
-    width: 30rem;
-    float: left;
-    
-    padding-top: 1.3rem;
-}
-li {
-    
-    padding: 7px;
-    padding-bottom: 14px;
-    line-height: 2rem;
-}
-li:hover {
-    text-decoration: underline;
-    cursor: pointer;
+    margin-bottom: 50px;
+    margin-top: 10px;
 }

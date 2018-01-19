@@ -7,7 +7,7 @@ export const getAllPolls = () => {
 				dispatch(gotPolls(response.data.polls))
 			})
 	}
-}
+};
 export const showSignupForm = () => {
 	return {
 		type: "SHOW_FORM",
@@ -20,10 +20,15 @@ export const showLoginForm = () => {
 		form: 'login'
 	};
 };
+export const hideForm = () => {
+	return {
+		type: "HIDE_FORM"
+	};
+};
 export const showcreateNewPollForm = () => {
 	return {
 		type: "SHOW_FORM",
-		form: 'newPoll'
+		form: 'create'
 	};
 };
 export const submitSignup = (name, email, password) => {
@@ -39,7 +44,7 @@ export const submitSignup = (name, email, password) => {
 				}
 			})
 	}
-}
+};
 export const submitLogin = (name, password) => {
 	console.log(name, password);
 	return(dispatch) => {
@@ -55,24 +60,40 @@ export const submitLogin = (name, password) => {
     		console.log('bla');
   		});
 	}
-}
+};
 export const getMyPolls = (id) => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/polls/my", {
-        		id: id,
-      		})
+		return axios.get("http://localhost:3000/polls/my/" + id)
 		.then((response) => {
 			dispatch(gotPolls(response.data.polls))
 		});
 	}
-}
-export const getOnePoll = (poll) => {
+};
+export const getOnePoll = (id) => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/polls/" + poll.id)
+		return axios.get("http://localhost:3000/polls/" + id)
 			.then((response) => {
 				dispatch(gotOnePoll(response.data.poll))
+			}).catch(err => {
+				console.log(err);
 			})
 	}
+};
+export const updatePoll = (userId, pollId, options) => {
+	return(dispatch) => {
+		console.log(userId, pollId, options);
+		return axios.patch("http://localhost:3000/polls/" + pollId, { 
+        		id: userId,
+        		options
+      		})
+			.then((response) => {
+				if(response.data.error) dispatch(alertMe(response.data.error));
+				else dispatch(getOnePoll(pollId))
+			})
+	}
+};
+export const alertMe = (message) => {
+	alert(message);
 }
 export const createNewPoll = () => {
 	return(dispatch) => {
@@ -92,41 +113,35 @@ export const createNewPoll = () => {
 				dispatch(createdNewPoll(response.data.poll))
 			})
 	}
-}
-export const updatePoll = (poll) => {
+};
+export const vote = (userId, pollId, options) => {
 	return(dispatch) => {
-		return axios.patch("http://localhost:3000/polls" + poll.id, { 
-			method: 'PATCH',
-      		headers: {
-        		'Accept': 'application/json',
-        		'Content-Type': 'application/json'
-      		},
-      		body: JSON.stringify({
-        		name: "options",
-        		value: this.props.activePoll.options
+		console.log(userId, pollId, options);
+		return axios.patch("http://localhost:3000/polls/vote/" + pollId, { 
+        		id: userId,
+        		options
       		})
-      	})
 			.then((response) => {
-				dispatch(updatedPoll(response.data.poll))
+				dispatch(getOnePoll(pollId))
 			})
 	}
-}
+};
 export const deletePoll = (poll, i) => {
 	return(dispatch) => {
 		return axios.delete("http://localhost:3000/polls" + poll._id)
 			.then((response) => {
 				if(response.data.poll) {
-					dispatch(deletedPoll('Deleted poll'));
+					dispatch(getAllPolls());
 				}
 			})
 	}
-}
+};
 export const gotPolls = (polls) => {
 	return {
 		type: "GOT_POLLS",
-		polls: polls
+		polls
 	};
-}
+};
 export const userLogin = (data) => {
 	console.log(data)
 	return {
@@ -135,37 +150,30 @@ export const userLogin = (data) => {
 		token: data.token,
 		form: ''
 	};
-}
+};
 export const gotOnePoll = (poll) => {
+	console.log(poll);
+	return {
+		type: "GOT_ONE_POLL",
+		poll
+	};
+};
+export const createdNewPoll = (poll) => {
 	console.log(poll)
 	return {
 		type: "GOT_ONE_POLL",
 		poll: poll
 	};
-}
-export const createdNewPoll = (poll) => {
-	console.log(poll)
-	return {
-		type: "CREATED_NEW_POLL",
-		poll: poll
-	};
-}
+};
 export const updatedPoll = (poll) => {
 	console.log(poll)
 	return {
-		type: "UPDATED_POLL",
+		type: "GOT_ONE_POLL",
 		poll: poll
 	};
-}
-export const deletedPoll = (message) => {
-	console.log(message)
-	return {
-		type: "DELETED_POLL",
-		message
-	};
-}
+};
 export const userLogout = () => {
 	return {
 		type: "USER_LOGGED_OUT"
 	};
-}
+};

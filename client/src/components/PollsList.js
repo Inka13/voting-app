@@ -2,35 +2,34 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getOnePoll} from '../actions/index';
-import Poll from './Poll'
+import Poll from './Poll';
 class PollsList extends Component {
     createList() {
         const list = [];
-         this.props.polls.forEach((poll) => {
-              list.push(<li key={poll.id} onClick={ () => this.props.getOnePoll(poll)}><a href={poll.request.url}>{poll.question}</a></li>);
+         this.props.polls.forEach((poll, i) => {
+              list.push(<Poll key={i} poll={poll} getOne={this.props.getOnePoll}/>);
         });
         return list;
     }
     render() {
-        
-            // need to put a loader here  <<<<<======
-         if(this.props.polls){   
-        return (
-            <main>
-                <Poll />
-                <ul>
+        if(this.props.polls){   
+            return (
+                <main>
+                    <div id="search">
+                        <div className="searchopt">Latest</div>
+                        <div className="searchopt">Popular</div>
+                    </div>
                     {this.createList()}    
-                </ul>
-            </main>
-        );
-    } else {
-        return (<p>Nothing...</p>);
-    }
+                
+                </main>
+            );
+        }
+        return (<div></div>);
     }
 }
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getOnePoll
+        getOnePoll,
     }, dispatch);
 }
 function mapStateToProps(state) {

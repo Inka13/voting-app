@@ -2,28 +2,31 @@ const Poll = require('../models/poll');
 const mongoose = require('mongoose');
 
 exports.getMyPolls = (req, res, next) => {
-	const userId = req.body.id;
-	Poll.find({posted_by: userId}).select('question options posted_by _id')
+	const {userId} = req.params;
+	Poll.find({posted_by: userId}).select('question options voters posted_on posted_by _id')
+	.populate('posted_by')
 	.exec()
 	.then(polls => {
-		polls.map(poll => {
-			return {
-				id: poll._id,
-				question: poll.question,
-				options: poll.options,
-				posted_by: poll.posted_by,
-				request: {
-					type: 'GET',
-					url: 'http://localhost:3000/polls/' + poll.id
-				}
-			}
-		});	
-		if(polls.length<1) response = "You don't have any polls yet.";
-		else response = "Fetched polls.";
 		res.status(200).json({
-			response,
-			polls
-		});	
+			count: polls.length,
+			response: 'Fetched polls.',
+			polls : polls.map(poll => {
+				console.log(poll);
+				return {
+					id: poll._id,
+					question: poll.question,
+					options: poll.options,
+					posted_by: poll.posted_by.name,
+					posted_on: poll.posted_on,
+					votes: poll.voters.length,
+					voters: poll.voters,
+					request: {
+						type: 'GET',
+						url: 'http://localhost:3000/polls/' + poll.id
+					}
+				}
+			})
+		});			
 	})
 	.catch(err => {
 		console.log(err);
@@ -35,20 +38,21 @@ exports.getMyPolls = (req, res, next) => {
 
 exports.getOnePoll = (req, res, next) => {
 	const id = req.params.pollId;
-	Poll.findOne({ _id: id}).select('question options posted_by _id')
+	Poll.findOne({ _id: id}).select('question options voters posted_on posted_by _id')
+	.populate('posted_by')
 	.exec()
 	.then(doc => {
 		const poll = {
+			id: doc._id,
 			question: doc.question,
 			options: doc.options,
-			posted_by: doc.posted_by,
-			request: {
-				type: 'GET',
-				url: 'http://localhost:3000/polls/' + doc.id
-			}
+			posted_by: doc.posted_by.name,
+			posted_on: doc.posted_on,
+			votes: doc.voters.length,
+			voters: doc.voters
 		}
 		res.status(200).json({
-			response: 'Fetched polls.',
+			response: 'Fetched poll.',
 			poll
 		});	
 	})
@@ -61,18 +65,23 @@ exports.getOnePoll = (req, res, next) => {
 }
 
 exports.getAllPolls = (req, res, next) => {
-	Poll.find({}).select('question options posted_by _id')
+	Poll.find({}).select('question options voters posted_on posted_by _id')
+	.populate('posted_by')
 	.exec()
 	.then(polls => {
 		res.status(200).json({
 			count: polls.length,
 			response: 'Fetched polls.',
 			polls : polls.map(poll => {
+				console.log(poll);
 				return {
 					id: poll._id,
 					question: poll.question,
 					options: poll.options,
-					posted_by: poll.posted_by,
+					posted_by: poll.posted_by.name,
+					posted_on: poll.posted_on,
+					votes: poll.voters.length,
+					voters: poll.voters,
 					request: {
 						type: 'GET',
 						url: 'http://localhost:3000/polls/' + poll.id
@@ -135,29 +144,26 @@ exports.createNewPoll = (req, res, next) => {
 
 }
 
+
 exports.updatePoll = (req, res, next) => {
 	const id = req.params.pollId;
-	const updates = {};
-	for(const prop of req.body){
-		updates[prop.name] = prop.value;
-		if(prop.name==="options") {
-			const options = [];
-			updates[prop.name].forEach((option, i) => {
-				options[i] = {opt: option, votes: 0};
-			});
-			updates[prop.name] = options;
-		}
-	}
-	
-	console.log(updates);
-	Poll.update({ _id: id }, { $set: updates }).exec()
-	.then(result => {
+	let options = req.body.options;
+	let userId = req.body.id || request.headers["x-forwarded-for"].split(',')[0];
+	let voters = [];
+	Poll.findOne({_id: id}).exec()
+	.then(poll => {
+		if(poll.voters.indexOf(userId)!==-1) res.status(201).json({
+			error: 'This machine already voted'
+		})
+		voters = [...poll.voters, req.body.id];
+		Poll.update({ _id: id }, { $set: {options: options, voters: voters} })
+		.then(result => {
 		res.status(200).json({
 			poll: result,
 			response: 'Poll updated.',
-			updates
 		});
-	})
+		})
+	})	
 	.catch(err => {
 		console.log(err);
 		res.status(500).json({
