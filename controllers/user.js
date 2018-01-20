@@ -108,6 +108,11 @@ exports.deleteUser = (req, res, next) => {
 		});
 	});		
 }
+exports.getIP = (req, res, next) => {
+  const ipaddress = req.headers["x-forwarded-for"].split(',')[0];
+  console.log(ipaddress);
+  res.status(200).json({ ip: ipaddress});
+};
 
 exports.getAllUsers = (req, res, next) => {
 	User.find({}).exec()

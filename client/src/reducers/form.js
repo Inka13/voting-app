@@ -6,6 +6,8 @@ function form(state='', action) {
 			return action.form; 
 		case 'HIDE_FORM':
 			return '';
+		case 'ALREADY_VOTED':
+			return 'alert';
 		 default:
 		 	return state;	
 		}

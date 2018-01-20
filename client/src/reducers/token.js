@@ -3,7 +3,7 @@ function token(state='', action) {
 		case 'USER_LOGGED_OUT':
 			return '';
 		 case 'USER_LOGGED_IN':
-			console.log(action.token);
+			//console.log(action.token);
 			return action.token;
 		 default:
 		 	return state;	

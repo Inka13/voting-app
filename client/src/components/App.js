@@ -6,14 +6,16 @@ import SigninForm from './SigninForm';
 import LoginForm from './LoginForm';
 import CreateForm from './CreateForm';
 import ActivePoll from './ActivePoll';
+import Alert from './Alert';
 import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getAllPolls} from '../actions/index';
+import {getAllPolls, getIP} from '../actions/index';
 
 class App extends Component {
   componentWillMount() {
     this.props.getAllPolls();
+    this.props.getIP();
   }
   render() {
       return (
@@ -31,6 +33,10 @@ class App extends Component {
           <div className="formback">
            <CreateForm /></div> : <span/>}
 
+           {this.props.form==='alert' ? 
+          <div className="formback">
+           <Alert /></div> : <span/>}
+
           <Header />
           {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
           {/*this.props.user.name ? <span/> : <Banner />*/}
@@ -43,7 +49,8 @@ class App extends Component {
 }; 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-      getAllPolls
+      getAllPolls,
+      getIP
     }, dispatch);
 }
 function mapStateToProps(state) {

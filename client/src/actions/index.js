@@ -8,6 +8,20 @@ export const getAllPolls = () => {
 			})
 	}
 };
+export const getIP = () => {
+	return(dispatch) => {
+		return axios.get("http://localhost:3000/users/ip")
+			.then((response) => {
+				dispatch(gotIP(response.data.ip))
+			})
+	}
+};
+export const gotIP = (ip) => {
+	return {
+		type: "GOT_IP",
+		user: {ip: ip}
+	};
+};
 export const showSignupForm = () => {
 	return {
 		type: "SHOW_FORM",
@@ -46,7 +60,7 @@ export const submitSignup = (name, email, password) => {
 	}
 };
 export const submitLogin = (name, password) => {
-	console.log(name, password);
+	//console.log(name, password);
 	return(dispatch) => {
 		return axios.post("http://localhost:3000/users/login", {
     				name: name,
@@ -54,10 +68,9 @@ export const submitLogin = (name, password) => {
         		}
         )
 		.then((response) => {
-			console.log(response.data);
 			if(response.data.token) dispatch(userLogin(response.data));
 		}).catch(function (error) {
-    		console.log('bla');
+    		console.log(error);
   		});
 	}
 };
@@ -81,7 +94,7 @@ export const getOnePoll = (id) => {
 };
 export const updatePoll = (userId, pollId, options) => {
 	return(dispatch) => {
-		console.log(userId, pollId, options);
+		console.log(userId , pollId, options);
 		return axios.patch("http://localhost:3000/polls/" + pollId, { 
         		id: userId,
         		options
@@ -93,11 +106,14 @@ export const updatePoll = (userId, pollId, options) => {
 	}
 };
 export const alertMe = (message) => {
-	alert(message);
+	return {
+		type: "ALREADY_VOTED",
+		form: 'alert'
+	};
 }
 export const createNewPoll = () => {
 	return(dispatch) => {
-		return axios.post("http://localhost:3000/polls", { 
+		return axios("http://localhost:3000/polls", { 
 			method: 'POST',
       		headers: {
         		'Accept': 'application/json',
@@ -143,7 +159,6 @@ export const gotPolls = (polls) => {
 	};
 };
 export const userLogin = (data) => {
-	console.log(data)
 	return {
 		type: "USER_LOGGED_IN",
 		user: data.user,

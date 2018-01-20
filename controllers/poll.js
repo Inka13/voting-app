@@ -73,7 +73,6 @@ exports.getAllPolls = (req, res, next) => {
 			count: polls.length,
 			response: 'Fetched polls.',
 			polls : polls.map(poll => {
-				console.log(poll);
 				return {
 					id: poll._id,
 					question: poll.question,
@@ -148,13 +147,13 @@ exports.createNewPoll = (req, res, next) => {
 exports.updatePoll = (req, res, next) => {
 	const id = req.params.pollId;
 	let options = req.body.options;
-	let userId = req.body.id || request.headers["x-forwarded-for"].split(',')[0];
+	let userId = req.body.id;
 	let voters = [];
 	Poll.findOne({_id: id}).exec()
 	.then(poll => {
 		if(poll.voters.indexOf(userId)!==-1) res.status(201).json({
 			error: 'This machine already voted'
-		})
+		});
 		voters = [...poll.voters, req.body.id];
 		Poll.update({ _id: id }, { $set: {options: options, voters: voters} })
 		.then(result => {

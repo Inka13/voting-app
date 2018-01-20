@@ -45,6 +45,7 @@ header {
     clear: both;
 }
 #title {
+     
     float: left;
     font-size: 30px;
     text-align: center;
@@ -99,7 +100,7 @@ main {
     width: 20%;
     margin-left: 4%;
     margin-top: 40px;
-    height: 130px;
+    height: 119px;
     float: left;
    
     background: white;
@@ -113,8 +114,9 @@ main {
 .titles {
     text-align: center;
     padding: 3px 8px;
-    height: 90px;
+    height: 69px;
     font-size: 1.1rem;
+    margin-top: 10px;
     overflow: hidden;
 } 
 .pollbox-bottom {
@@ -150,7 +152,7 @@ main {
 #welcome {
     padding-top: 5rem;
 }
-#signinform, #loginform, #createform {
+#signinform, #loginform, #createform, #alertform {
     position: absolute;
     background: white;
     border: 1px solid rgb(112, 146, 190);
@@ -166,6 +168,11 @@ main {
 .form {
     width: 80%;
     margin-left: 10%;
+}
+.alert {
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 40px;
 }
 .formback {
     position: fixed;
@@ -212,10 +219,10 @@ button {
     color: white;
     border:1px solid rgb(153, 217, 234);
     border-radius: 12px;
-    width: 70px;
+    width: 80px;
 }
 .submit {
-    width: 70px;
+    width: 80px;
     margin: auto;
     margin-bottom: 50px;
     margin-top: 10px;
