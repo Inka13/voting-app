@@ -98,49 +98,29 @@ exports.getAllPolls = (req, res, next) => {
 }
 
 exports.createNewPoll = (req, res, next) => {
-	const response = [];
-		!req.body.question && response.push("You have to ask a question, right? No blanks!");
-		(!req.body.options || req.body.options.length<2) && response.push("Minimum of two options is required");
-		!req.body.id && response.push("You have to be signed up to post a new poll!");
-	if(response.length<1) {
 		const options = [];
 		req.body.options.forEach((option, i) => {
 			options[i] = {opt: option, votes: 0};
-		})
+		});
 		const poll = new Poll({
 			_id: new mongoose.Types.ObjectId(),
 			question:  req.body.question,
-			options,
+			options: options,
 			posted_by:  req.body.id,
 			posted_on: new Date,
 			voters: []
 			});
 		poll.save().then(result => {
 			res.status(201).json({
-				createdPoll: {
-					question: poll.question,
-					options: poll.options,
-					posted_by: poll.posted_by,
-					request: {
-						type: 'GET',
-						url: 'http://localhost:3000/polls/' + poll.id
-					}
-				},
 				response: 'New poll created successfully.'
 			});
 		})
 		.catch(err => {
 			console.log(err);
 			res.status(400).json({
-				err
+				err: err
 			});
 		});	
-	} else {
-		res.status(400).json({
-			response
-		});
-	}
-
 }
 
 
@@ -154,6 +134,7 @@ exports.updatePoll = (req, res, next) => {
 		if(poll.voters.indexOf(userId)!==-1) res.status(201).json({
 			error: 'This machine already voted'
 		});
+		else {
 		voters = [...poll.voters, req.body.id];
 		Poll.update({ _id: id }, { $set: {options: options, voters: voters} })
 		.then(result => {
@@ -162,6 +143,7 @@ exports.updatePoll = (req, res, next) => {
 			response: 'Poll updated.',
 		});
 		})
+		}
 	})	
 	.catch(err => {
 		console.log(err);

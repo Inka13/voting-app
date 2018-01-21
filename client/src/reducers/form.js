@@ -6,6 +6,8 @@ function form(state='', action) {
 			return action.form; 
 		case 'HIDE_FORM':
 			return '';
+		case 'GOT_POLLS':
+			return '';
 		case 'ALREADY_VOTED':
 			return 'alert';
 		 default:

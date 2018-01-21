@@ -10,7 +10,7 @@ router.get('/:pollId', PollController.getOnePoll);
 
 router.get('/', PollController.getAllPolls);
 
-router.post('/', checkAuth, PollController.createNewPoll);
+router.post('/', PollController.createNewPoll);
 
 
 

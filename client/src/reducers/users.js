@@ -4,9 +4,6 @@ function user(state={}, action) {
 			return {};
 		 case 'USER_LOGGED_IN':
 			return action.user;
-		case 'GOT_IP':
-			console.log(action.user);
-			return action.user;
 		 default:
 		 	return state;	
 		}

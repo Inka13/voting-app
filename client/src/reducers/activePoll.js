@@ -4,6 +4,8 @@ function activePoll(state={}, action) {
 			return action.poll;
 		case 'GOT_POLLS':
 			return {};
+		case 'USER_VOTED':
+			return {};
 		default:
 		 	return state;	
 	}

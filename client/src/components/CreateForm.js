@@ -1,14 +1,31 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {createNewPoll, hideForm} from '../actions/index';
+import {createNewPoll, hideForm, addOption, deleteOption} from '../actions/index';
 class CreateForm extends React.Component {
-
     submit = (e) => {
-    e.preventDefault();
-    this.props.submitSignup(this.refs.name.value, this.refs.email.value, this.refs.password.value);
+        e.preventDefault();
+        const options = [];
+        const num = this.props.options;
+        for(let i=1; i<=num; i++) {           
+            this.refs["opt" +i].value && options.push(this.refs["opt" + i].value);
+        }
+    this.props.createNewPoll(this.refs.topic.value, options, this.props.user._id);
     }
-    
+
+    createList = () => {
+        const list =[];
+        let num = this.props.options;
+        for (let i=1; i<=num; i++) {
+            list.push(<div key={i} id={"opt" + i} className="form">
+                            <div className="inputopts">Option {i}:</div>
+                            {i<3 ? <input ref={"opt" +i} type="text" required/> :
+                            <input ref={"opt" +i} type="text" />}
+                            {(i===num && i>2) ? <span onClick={() => this.props.deleteOption()}>X</span> :  <span/>}
+                        </div>);
+        }
+        return list;
+    }
     render() {
         return (
                 <form id="createform" onSubmit={this.submit}>
@@ -18,17 +35,17 @@ class CreateForm extends React.Component {
                     </div>
                     <div className="form">
                         <div className="inputopts">Topic:</div>
-                        <input ref="text" type="text" required/>
-
+                        <input ref="topic" type="text" required/>
                     </div>
-                    <div className="form">
-                        <div className="inputopts">1:</div>
-                        <input ref="Option1" type="text" required/>
+                    
+                        {this.createList()}
+                    
+                     <div className="form">
+                        <div id="addOption" onClick={() => this.props.addOption()}>
+                        + Add Option
+                        </div>
                     </div>
-                    <div className="form">
-                        <div className="inputopts">2:</div>
-                        <input ref="option2" type="text" required/>
-                    </div>
+                    
                     <div className="submit">
                         <button type="submit">Submit</button>
                     </div>
@@ -39,13 +56,17 @@ class CreateForm extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         createNewPoll,
-        hideForm
+        hideForm,
+        addOption,
+        deleteOption
     }, dispatch);
 }
 function mapStateToProps(state) {
     return {
+        user: state.user,
         form: state.form,
-        messages: state.messages
+        messages: state.messages,
+        options: state.options
     };
 }
 export default connect(mapStateToProps, matchDispatchToProps)(CreateForm);

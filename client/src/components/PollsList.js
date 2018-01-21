@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getOnePoll} from '../actions/index';
+import Menu from './Menu';
 import Poll from './Poll';
 class PollsList extends Component {
     createList() {
@@ -14,14 +15,14 @@ class PollsList extends Component {
     render() {
         if(this.props.polls){   
             return (
+            <div>
+            <Menu/>
                 <main>
-                    <div id="search">
-                        <div className="searchopt">Latest</div>
-                        <div className="searchopt">Popular</div>
-                    </div>
+                    
                     {this.createList()}    
                 
                 </main>
+                </div>
             );
         }
         return (<div></div>);

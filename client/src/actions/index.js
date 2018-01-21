@@ -8,6 +8,12 @@ export const getAllPolls = () => {
 			})
 	}
 };
+export const gotPolls = (polls) => {
+	return {
+		type: "GOT_POLLS",
+		polls
+	};
+};
 export const getIP = () => {
 	return(dispatch) => {
 		return axios.get("http://localhost:3000/users/ip")
@@ -19,7 +25,7 @@ export const getIP = () => {
 export const gotIP = (ip) => {
 	return {
 		type: "GOT_IP",
-		user: {ip: ip}
+		ip: ip
 	};
 };
 export const showSignupForm = () => {
@@ -92,6 +98,14 @@ export const getOnePoll = (id) => {
 			})
 	}
 };
+export const gotOnePoll = (poll) => {
+	console.log(poll);
+	return {
+		type: "GOT_ONE_POLL",
+		poll,
+		form: ''
+	};
+};
 export const updatePoll = (userId, pollId, options) => {
 	return(dispatch) => {
 		console.log(userId , pollId, options);
@@ -100,48 +114,50 @@ export const updatePoll = (userId, pollId, options) => {
         		options
       		})
 			.then((response) => {
+				console.log(pollId);
 				if(response.data.error) dispatch(alertMe(response.data.error));
-				else dispatch(getOnePoll(pollId))
+				dispatch(userVoted());
+				dispatch(getOnePoll(pollId))
 			})
 	}
 };
-export const alertMe = (message) => {
+export const userVoted = () => {
+	return {
+		type: "USER_VOTED"
+	};
+}
+export const alertMe = () => {
 	return {
 		type: "ALREADY_VOTED",
 		form: 'alert'
 	};
 }
-export const createNewPoll = () => {
+export const addOption = () => {
+	return {
+		type: "ADD_OPTION",
+		
+	};
+}
+export const deleteOption = () => {
+	return {
+		type: "DELETE_OPTION",
+		
+	};
+}
+export const createNewPoll = (question, options, id) => {
 	return(dispatch) => {
-		return axios("http://localhost:3000/polls", { 
-			method: 'POST',
-      		headers: {
-        		'Accept': 'application/json',
-        		'Content-Type': 'application/json'
-      		},
-      		body: JSON.stringify({
-      			question: this.props.newPoll.question,
-      			options: this.props.newPoll.options,
-        		id: this.props.userId,
+		return axios.post("http://localhost:3000/polls", {
+      			question,
+      			options,
+      			id
       		})
-      	})
 			.then((response) => {
-				dispatch(createdNewPoll(response.data.poll))
+				console.log(response.data);
+				dispatch(getAllPolls())
 			})
 	}
 };
-export const vote = (userId, pollId, options) => {
-	return(dispatch) => {
-		console.log(userId, pollId, options);
-		return axios.patch("http://localhost:3000/polls/vote/" + pollId, { 
-        		id: userId,
-        		options
-      		})
-			.then((response) => {
-				dispatch(getOnePoll(pollId))
-			})
-	}
-};
+
 export const deletePoll = (poll, i) => {
 	return(dispatch) => {
 		return axios.delete("http://localhost:3000/polls" + poll._id)
@@ -152,12 +168,7 @@ export const deletePoll = (poll, i) => {
 			})
 	}
 };
-export const gotPolls = (polls) => {
-	return {
-		type: "GOT_POLLS",
-		polls
-	};
-};
+
 export const userLogin = (data) => {
 	return {
 		type: "USER_LOGGED_IN",
@@ -166,27 +177,9 @@ export const userLogin = (data) => {
 		form: ''
 	};
 };
-export const gotOnePoll = (poll) => {
-	console.log(poll);
-	return {
-		type: "GOT_ONE_POLL",
-		poll
-	};
-};
-export const createdNewPoll = (poll) => {
-	console.log(poll)
-	return {
-		type: "GOT_ONE_POLL",
-		poll: poll
-	};
-};
-export const updatedPoll = (poll) => {
-	console.log(poll)
-	return {
-		type: "GOT_ONE_POLL",
-		poll: poll
-	};
-};
+
+
+
 export const userLogout = () => {
 	return {
 		type: "USER_LOGGED_OUT"

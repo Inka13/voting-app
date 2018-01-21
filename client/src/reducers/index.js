@@ -4,15 +4,17 @@ import PollsReducer from './polls';
 import ActivePollReducer from './activePoll'
 import FormReducer from './form';
 import TokenReducer from './token';
-//import LoginReducer from './polls';
-
+import OptionsReducer from './options';
+import IpReducer from './ip';
 
 const reducers = combineReducers({
+	ip: IpReducer,
 	user: UserReducer,
 	polls: PollsReducer,
 	activePoll: ActivePollReducer,
 	form: FormReducer,
-	token: TokenReducer
+	token: TokenReducer,
+	options: OptionsReducer
 });
 
 export default reducers;

@@ -2,7 +2,7 @@ function polls(state=[], action) {
 	switch(action.type) {
 		case 'GOT_POLLS':
 			return action.polls;
-		case 'GOT_ONE_POLL':
+		case 'USER_VOTED':
 			return [];
 		 default:
 		 	return state;
