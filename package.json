@@ -4,24 +4,28 @@
   "description": "freecodecamp full stack challenge",
   "main": "index.js",
   "scripts": {
+    "build": "concurrently \"cd client && yarn build\" \"cd server && yarn build\"",
+    "install": "(cd client && yarn) && (cd server && yarn)",
+    "start": "concurrently \"cd client && PORT=3000 yarn start\" \"cd server && PORT=3001 yarn start\"",
+    "start:prod": "cd server && yarn start:prod",
     "test": "echo `Error: no test specified` && exit 1",
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
-    "react-scripts": "1.0.17",
     "bcrypt": "^1.0.3",
+    "concurrently": "^3.5.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "http": "0.0.0",
     "jsonwebtoken": "^8.1.0",
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.9",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "react-scripts": "1.0.17"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0",
     "nodemon": "^1.14.10"
   },
   "repository": {
