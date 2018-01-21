@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const pollRoutes = require('./routes/poll');
 const userRoutes = require('./routes/user');
-
+const path = require('path');
 
 mongoose.connect(process.env.MONGOLAB_URI,
 	{
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
-
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/polls', pollRoutes);
 app.use('/users', userRoutes);
 

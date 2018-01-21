@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getAllPolls = () => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/polls")
+		return axios.get("/polls")
 			.then((response) => {
 				dispatch(gotPolls(response.data.polls))
 			})
@@ -16,7 +16,7 @@ export const gotPolls = (polls) => {
 };
 export const getIP = () => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/users/ip")
+		return axios.get("/users/ip")
 			.then((response) => {
 				dispatch(gotIP(response.data.ip))
 			})
@@ -53,7 +53,7 @@ export const showcreateNewPollForm = () => {
 };
 export const submitSignup = (name, email, password) => {
 	return(dispatch) => {
-		return axios.post("http://localhost:3000/users/signup", {
+		return axios.post("/users/signup", {
         		name,
         		email,
         		password
@@ -68,7 +68,7 @@ export const submitSignup = (name, email, password) => {
 export const submitLogin = (name, password) => {
 	//console.log(name, password);
 	return(dispatch) => {
-		return axios.post("http://localhost:3000/users/login", {
+		return axios.post("/users/login", {
     				name: name,
         			password: password
         		}
@@ -82,7 +82,7 @@ export const submitLogin = (name, password) => {
 };
 export const getMyPolls = (id) => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/polls/my/" + id)
+		return axios.get("/polls/my/" + id)
 		.then((response) => {
 			dispatch(gotPolls(response.data.polls))
 		});
@@ -90,7 +90,7 @@ export const getMyPolls = (id) => {
 };
 export const getOnePoll = (id) => {
 	return(dispatch) => {
-		return axios.get("http://localhost:3000/polls/" + id)
+		return axios.get("/polls/" + id)
 			.then((response) => {
 				dispatch(gotOnePoll(response.data.poll))
 			}).catch(err => {
@@ -109,7 +109,7 @@ export const gotOnePoll = (poll) => {
 export const updatePoll = (userId, pollId, options) => {
 	return(dispatch) => {
 		console.log(userId , pollId, options);
-		return axios.patch("http://localhost:3000/polls/" + pollId, { 
+		return axios.patch("/polls/" + pollId, { 
         		id: userId,
         		options
       		})
@@ -146,7 +146,7 @@ export const deleteOption = () => {
 }
 export const createNewPoll = (question, options, id) => {
 	return(dispatch) => {
-		return axios.post("http://localhost:3000/polls", {
+		return axios.post("/polls", {
       			question,
       			options,
       			id
@@ -160,7 +160,7 @@ export const createNewPoll = (question, options, id) => {
 
 export const deletePoll = (poll, i) => {
 	return(dispatch) => {
-		return axios.delete("http://localhost:3000/polls" + poll._id)
+		return axios.delete("/polls" + poll._id)
 			.then((response) => {
 				if(response.data.poll) {
 					dispatch(getAllPolls());
