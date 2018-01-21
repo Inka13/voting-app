@@ -13,7 +13,7 @@
     "start:prod": "yarn start:prod",
     "test": "echo `Error: no test specified` && exit 1",
     "client": "cd client && yarn start",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
