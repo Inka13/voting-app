@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "freecodecamp full stack challenge",
   "main": "index.js",
+  "engines": {
+    "node": "8.9.3"
+  },
   "scripts": {
     "test": "echo `Error: no test specified` && exit 1",
     "client": "cd client && yarn start",
