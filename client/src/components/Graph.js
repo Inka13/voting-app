@@ -9,7 +9,8 @@ class Graph extends React.Component {
     drawChart = () => {
        const dataset = [];
        const labels = [];
-       const colors = ["rgb(181, 230, 29)","rgb(112, 146, 190)","rgb(255, 201, 14)", "rgb(163, 73, 164)"]; 
+       const colors = ["rgb(181, 230, 29)","rgb(112, 146, 190)","rgb(255, 201, 14)", "rgb(163, 73, 164)",
+      "rgb(255, 127, 39)","rgb(255, 174, 201)","rgb(0, 162, 232)", "rgb(255, 242, 0)"]; 
 
        this.props.activePoll.options.forEach((option, i) => {
         dataset.push(option.votes);

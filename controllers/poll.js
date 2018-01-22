@@ -11,7 +11,63 @@ exports.getMyPolls = (req, res, next) => {
 			count: polls.length,
 			response: 'Fetched polls.',
 			polls : polls.map(poll => {
-				console.log(poll);
+				return {
+					id: poll._id,
+					question: poll.question,
+					options: poll.options,
+					posted_by: poll.posted_by.name,
+					posted_on: poll.posted_on,
+					votes: poll.voters.length,
+					voters: poll.voters
+				}
+			})
+		});			
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(400).json({
+			response: 'No polls yet.'
+		});
+	})
+}
+exports.getLatest = (req, res, next) => {
+	Poll.find({}).sort({posted_on: -1}).limit(8).select('question options voters posted_on posted_by _id')
+	.populate('posted_by')
+	.exec()
+	.then(polls => {
+		res.status(200).json({
+			count: polls.length,
+			response: 'Fetched polls.',
+			polls : polls.map(poll => {
+				return {
+					id: poll._id,
+					question: poll.question,
+					options: poll.options,
+					posted_by: poll.posted_by.name,
+					posted_on: poll.posted_on,
+					votes: poll.voters.length,
+					voters: poll.voters
+				}
+			})
+		});			
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(400).json({
+			response: 'No polls yet.'
+		});
+	})
+}
+
+exports.getPopular = (req, res, next) => {
+	Poll.find({}).sort({votes: -1}).limit(8).select('question options voters posted_on posted_by _id')
+	.populate('posted_by')
+	.exec()
+	.then(polls => {
+		res.status(200).json({
+			count: polls.length,
+			response: 'Fetched polls.',
+			polls : polls.map(poll => {
 				return {
 					id: poll._id,
 					question: poll.question,
@@ -136,7 +192,7 @@ exports.updatePoll = (req, res, next) => {
 		});
 		else {
 		voters = [...poll.voters, req.body.id];
-		Poll.update({ _id: id }, { $set: {options: options, voters: voters} })
+		Poll.update({ _id: id }, { $set: {options: options, voters: voters}, $inc: {votes: 1} })
 		.then(result => {
 		res.status(200).json({
 			poll: result,
@@ -164,7 +220,7 @@ exports.deletePoll = (req, res, next) => {
 		});
 	})
 	.catch(err => {
-		concole.log(err);
+		console.log(err);
 		res.status(500).json({
 			response: err
 		});

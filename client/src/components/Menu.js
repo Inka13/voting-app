@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getOnePoll} from '../actions/index';
-import Poll from './Poll';
+import {getLatest, getPopular} from '../actions/index';
+
 class Menu extends Component {
     
     render() {
         if(this.props.polls){   
             return (
                     <div id="search">
-                        <div className="searchopt">Latest</div>
-                        <div className="searchopt">Popular</div>
+                        <div className="searchopt" onClick={() => this.props.getLatest()}>Latest</div>
+                        <div className="searchopt" onClick={() => this.props.getPopular()}>Popular</div>
                     </div>
             );
         }
@@ -19,7 +19,8 @@ class Menu extends Component {
 }
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getOnePoll,
+        getLatest,
+        getPopular
     }, dispatch);
 }
 function mapStateToProps(state) {

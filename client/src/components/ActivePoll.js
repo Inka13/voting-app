@@ -74,7 +74,7 @@ class ActivePoll extends React.Component {
                         }
                     </div>
                     <Graph />
-                    <div id="clear"></div>
+                    <div className="clear"></div>
                 </div>
                 </div>
         );

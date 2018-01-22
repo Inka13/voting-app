@@ -6,6 +6,10 @@ const PollController = require('../controllers/poll');
 
 router.get('/my/:userId', PollController.getMyPolls);
 
+router.get('/latest', PollController.getLatest);
+
+router.get('/popular', PollController.getPopular);
+
 router.get('/:pollId', PollController.getOnePoll);
 
 router.get('/', PollController.getAllPolls);

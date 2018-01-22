@@ -7,10 +7,6 @@
     "node": "8.9.3"
   },
   "scripts": {
-    "build": "concurrently \"cd client && yarn build\" \"yarn build\"",
-    "install": "(cd client && yarn) && yarn",
-    "start": "concurrently \"cd client && PORT=3000 yarn start\" \"PORT=3001 yarn start\"",
-    "start:prod": "yarn start:prod",
     "test": "echo `Error: no test specified` && exit 1",
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
@@ -25,8 +21,7 @@
     "jsonwebtoken": "^8.1.0",
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.9",
-    "morgan": "^1.9.0",
-    "react-scripts": "1.0.17"
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "nodemon": "^1.14.10"

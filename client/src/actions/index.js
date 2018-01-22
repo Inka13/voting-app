@@ -8,6 +8,22 @@ export const getAllPolls = () => {
 			})
 	}
 };
+export const getLatest = () => {
+	return(dispatch) => {
+		return axios.get("/polls/latest")
+			.then((response) => {
+				dispatch(gotPolls(response.data.polls))
+			})
+	}
+};
+export const getPopular = () => {
+	return(dispatch) => {
+		return axios.get("/polls/popular")
+			.then((response) => {
+				dispatch(gotPolls(response.data.polls))
+			})
+	}
+};
 export const gotPolls = (polls) => {
 	return {
 		type: "GOT_POLLS",
