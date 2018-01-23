@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import Banner from './Banner';
+//import Banner from './Banner';
 import PollsList from './PollsList';
 import SigninForm from './SigninForm';
 import LoginForm from './LoginForm';

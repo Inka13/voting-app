@@ -20,7 +20,7 @@ class PollsList extends Component {
                 <main>
                     
                     {this.createList()}    
-                <div className="clear" />
+                
                 </main>
                 </div>
             );
