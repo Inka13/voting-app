@@ -1,6 +1,6 @@
 {
 	"env": {
-		"MONGOLAB_URI": "mongodb://Inka13:pollerapppass@ds251737.mlab.com:51737/poller-app",
+		"MONGOLAB_URI": "mongodb://heroku_j5157hf9:kavica12@ds111618.mlab.com:11618/heroku_j5157hf9",
 		"JWT_KEY": "secret"
 	}
 }
