@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {confirmDelete} from '../actions/index';
+
 class Poll extends Component {
     
     render() {
@@ -23,15 +23,11 @@ class Poll extends Component {
         );
     }
 }
-function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        confirmDelete
-    }, dispatch);
-}
+
 function mapStateToProps(state) {
     return {
         user: state.user
     };
 }
-export default connect(mapStateToProps, matchDispatchToProps)(Poll);
+export default connect(mapStateToProps)(Poll);
 

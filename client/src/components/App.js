@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Header from './Header';
-//import Banner from './Banner';
+import Banner from './Banner';
 import PollsList from './PollsList';
 import SigninForm from './SigninForm';
 import LoginForm from './LoginForm';
 import CreateForm from './CreateForm';
 import ActivePoll from './ActivePoll';
 import Alert from './Alert';
+import Footer from './Footer';
 import ConfirmDelete from './ConfirmDelete';
 import './App.css';
 import {bindActionCreators} from 'redux';
@@ -43,10 +44,10 @@ class App extends Component {
            <ConfirmDelete /></div> : <span/>}
 
           <Header />
-          {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
           {this.props.user.name ? <span/> : <Banner />}
+          {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
 
-          
+          <Footer />
 
         </div>
       );

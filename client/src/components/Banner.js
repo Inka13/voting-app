@@ -6,7 +6,19 @@ class Banner extends React.Component {
         
         return (
             <div id="banner">
+                <div id="bannerleft">
+                    <img src="./bann1.png" alt="app picture" />
+                </div>
+                <div id="bannerright">
+                    <img src="./bann2.png" alt="app picture" />
+                </div>
                 <h1 id="welcome">Poller</h1>
+                <div id="notes">
+                    <p>Vote on polls!</p>
+                    <p>Create your own polls!</p>
+                    <p>Share your polls!</p>
+                </div>
+                <div className="clear"></div>
             </div>
         );
     }
