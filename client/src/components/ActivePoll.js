@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {updatePoll} from '../actions/index';
+import {updatePoll, confirmDelete} from '../actions/index';
 import Graph from './Graph';
 import Menu from './Menu';
 class ActivePoll extends React.Component {
@@ -59,6 +59,7 @@ class ActivePoll extends React.Component {
                 <Menu/>
                 <div id="active">
                     <div id="votelist">
+                        {this.props.activePoll.posted_by === this.props.user.name ? <div className="delete" onClick={() => this.props.confirmDelete()}>Delete</div> : <span/>}
                         <h1>{this.props.activePoll.question}</h1>
                         {this.props.activePoll.voters.indexOf(this.props.user._id)!==-1 ? 
                             <div>{options} <div id="message">Voted.</div></div>
@@ -82,7 +83,7 @@ class ActivePoll extends React.Component {
 }
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        
+        confirmDelete,
         updatePoll
     }, dispatch);
 }

@@ -20,6 +20,6 @@ router.post('/', PollController.createNewPoll);
 
 router.patch('/:pollId', PollController.updatePoll);
 
-router.delete('/', checkAuth, PollController.deletePoll);
+router.delete('/:pollId', PollController.deletePoll);
 
 module.exports = router;

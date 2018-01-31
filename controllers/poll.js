@@ -1,6 +1,6 @@
 const Poll = require('../models/poll');
 const mongoose = require('mongoose');
-
+const mongodb = require('mongodb');
 exports.getMyPolls = (req, res, next) => {
 	const {userId} = req.params;
 	Poll.find({posted_by: userId}).select('question options voters posted_on posted_by _id')
@@ -210,13 +210,14 @@ exports.updatePoll = (req, res, next) => {
 }
 
 exports.deletePoll = (req, res, next) => {
-	const id = req.body.pollId;
-	const userId = req.body.userId;
-	
+	const id = req.params.pollId;
+	const userId = req.query.id;
+	console.log(id);
+	console.log(userId);
 	Poll.remove({$and : [ {_id: id}, {posted_by: userId} ]}).exec()
 	.then(result => {
 		res.status(200).json({
-			response: 'Poll deleted.'
+			poll: 'Deleted'
 		});
 	})
 	.catch(err => {

@@ -9,7 +9,7 @@ const pollRoutes = require('./routes/poll');
 const userRoutes = require('./routes/user');
 const path = require('path');
 
-mongoose.connect(process.env.MONGOLAB_URI,
+mongoose.connect(process.env.MONGOLAB_URI || process.env.MONGODB_URI,
 	{
 		useMongoClient: true
 	}

@@ -10,6 +10,8 @@ function form(state='', action) {
 			return '';
 		case 'ALREADY_VOTED':
 			return 'alert';
+		case 'CONFIRM_DELETE':
+			return action.form;
 		 default:
 		 	return state;	
 		}

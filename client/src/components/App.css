@@ -16,7 +16,10 @@ header {
     position: relative;
 
 }
-#message { color: red; }
+#message { 
+    color: red;
+    padding-bottom: 30px;
+}
 #active {
     width: 90%;
     background: white;
@@ -144,6 +147,7 @@ main {
     margin-left: -8px;
     margin-top: 5px;
 }
+
 .pollbox-bottom {
     background: linear-gradient(to left, rgb(151, 200, 0) 20%, rgb(181, 230, 29) 80%);
     height: 40px;
@@ -157,16 +161,20 @@ main {
     float: left;
     color: rgb(0, 64, 128);
 }
+ 
 .on {
-    width: 100%;
-} 
-
+    width: 70%;
+}
 .legend span {
     font-weight: bold;
 }
-
+.delete {
+    color: red;
+    font-size: 16px;
+    padding: 10px;
+    text-align: left;
+}
 #banner {
-
     width: 100%;
     height: 20rem;
     text-align: center;
@@ -177,7 +185,7 @@ main {
 #welcome {
     padding-top: 5rem;
 }
-#signinform, #loginform, #createform, #alertform {
+#signinform, #loginform, #createform, #alertform, #deleteform {
     position: absolute;
     background: white;
     border: 1px solid rgb(112, 146, 190);

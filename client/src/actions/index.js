@@ -124,13 +124,13 @@ export const gotOnePoll = (poll) => {
 };
 export const updatePoll = (userId, pollId, options) => {
 	return(dispatch) => {
-		console.log(userId , pollId, options);
+		//console.log(userId , pollId, options);
 		return axios.patch("/polls/" + pollId, { 
         		id: userId,
         		options
       		})
 			.then((response) => {
-				console.log(pollId);
+				//console.log(pollId);
 				if(response.data.error) dispatch(alertMe(response.data.error));
 				dispatch(userVoted());
 				dispatch(getOnePoll(pollId))
@@ -173,11 +173,20 @@ export const createNewPoll = (question, options, id) => {
 			})
 	}
 };
-
-export const deletePoll = (poll, i) => {
+export const confirmDelete = (id, pollId) => {
+	return {
+		type: "CONFIRM_DELETE",
+		form: 'confirm'
+	};
+};
+export const deletePoll = (id, pollId) => {
+	
 	return(dispatch) => {
-		return axios.delete("/polls" + poll._id)
+		return axios.delete("/polls/" + pollId, {
+			params: { id: id }
+		})
 			.then((response) => {
+				dispatch(hideForm());
 				if(response.data.poll) {
 					dispatch(getAllPolls());
 				}

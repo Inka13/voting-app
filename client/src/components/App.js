@@ -7,6 +7,7 @@ import LoginForm from './LoginForm';
 import CreateForm from './CreateForm';
 import ActivePoll from './ActivePoll';
 import Alert from './Alert';
+import ConfirmDelete from './ConfirmDelete';
 import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -37,9 +38,13 @@ class App extends Component {
           <div className="formback">
            <Alert /></div> : <span/>}
 
+           {this.props.form==='confirm' ? 
+          <div className="formback">
+           <ConfirmDelete /></div> : <span/>}
+
           <Header />
           {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
-          {/*this.props.user.name ? <span/> : <Banner />*/}
+          {this.props.user.name ? <span/> : <Banner />}
 
           
 
