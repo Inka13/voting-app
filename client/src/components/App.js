@@ -7,8 +7,10 @@ import LoginForm from './LoginForm';
 import CreateForm from './CreateForm';
 import ActivePoll from './ActivePoll';
 import Alert from './Alert';
+import GetOne from './GetOne';
 import Footer from './Footer';
 import ConfirmDelete from './ConfirmDelete';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -21,6 +23,8 @@ class App extends Component {
   }
   render() {
       return (
+        <Router>
+
         <div className="app">
 
           {this.props.form==='signup' ? 
@@ -44,12 +48,15 @@ class App extends Component {
            <ConfirmDelete /></div> : <span/>}
 
           <Header />
+          
           {this.props.user.name ? <span/> : <Banner />}
-          {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
-
-          <Footer />
-
+           {this.props.activePoll.id ? <ActivePoll/> : <PollsList />}
+         <Route path={"/:id"} component={GetOne} />
+         <Footer />
         </div>
+        
+         
+        </Router>
       );
   }
 }; 

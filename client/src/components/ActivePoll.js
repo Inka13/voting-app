@@ -60,6 +60,11 @@ class ActivePoll extends React.Component {
                 <div id="active">
                     <div id="votelist">
                         {this.props.activePoll.posted_by === this.props.user.name ? <div className="delete" onClick={() => this.props.confirmDelete()}>Delete</div> : <span/>}
+                         <div className="searchopt">
+                            <a href={"https://www.facebook.com/sharer/sharer.php?u=https://localhost:3000/" + this.props.activePoll.id} rel="noopener noreferrer" target="_blank">
+                                Share
+                            </a>
+                        </div>
                         <h1>{this.props.activePoll.question}</h1>
                         {this.props.activePoll.voters.indexOf(this.props.user._id)!==-1 ? 
                             <div>{options} <div id="message">Voted.</div></div>

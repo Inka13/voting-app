@@ -11,9 +11,7 @@ class Menu extends Component {
                     <div id="search">
                         <div className="searchopt" onClick={() => this.props.getLatest()}>Latest</div>
                         <div className="searchopt" onClick={() => this.props.getPopular()}>Popular</div>
-                        {/*<div className="searchopt"><a href="https://www.facebook.com/sharer/sharer.php?u=https://inka13.github.io/Portfolio-official/" target="_blank">
-  Share
-</a></div> */}
+                       
                     </div>
             );
         }

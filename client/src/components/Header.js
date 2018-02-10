@@ -12,6 +12,7 @@ class Header extends React.Component {
     }
     render() {
         return (
+            <div>
             <header>
                 <div id="title" onClick={() => this.props.getAllPolls()}>Poller</div>
                 <div className="icon" onClick={() => this.openmenu()}>&#9776;</div>
@@ -23,6 +24,7 @@ class Header extends React.Component {
                             <div className="signin" onClick={this.props.user.name ? () => this.props.userLogout() : () => this.props.showSignupForm()}>{this.props.user.name ? 'Sign Out' : 'Sign In'}</div>
                         </div>
             </header>
+            </div>
         );
     }
 }
